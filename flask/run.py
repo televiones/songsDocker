@@ -4,9 +4,9 @@ from flask import Flask, jsonify, Response
 
 from config.app_config import AppConfig
 
-app = AppConfig(Flask(__name__))
-flask_app = app.app
-cursor = app.cursor
+flask_app = AppConfig(Flask(__name__))
+app = flask_app.app
+cursor = flask_app.cursor
 
 
 def get_songs() -> list[dict]:
@@ -17,7 +17,7 @@ def get_songs() -> list[dict]:
     return results
 
 
-@flask_app.route("/")
+@app.route("/")
 def index():
     # Use os.getenv("key") to get environment variables
     app_name = os.getenv("APP_NAME")
@@ -28,7 +28,7 @@ def index():
     return "Hello from Flask"
 
 
-@flask_app.route('/db')
+@app.route('/db')
 def index_db() -> Response:
     return jsonify(get_songs())
 
@@ -38,4 +38,4 @@ def parse_json(headers, datasource):
 
 
 if __name__ == '__main__':
-    flask_app.run(host='localhost', port=8080)
+    app.run(host='localhost', port=8080)

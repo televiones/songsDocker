@@ -1,4 +1,4 @@
 Flask==2.2.2
 flask-mysql
-flask-cors
-uWSGI==2.0.17.1
+python-dev-tools
+uWSGI

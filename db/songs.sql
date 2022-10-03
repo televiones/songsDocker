@@ -1,5 +1,9 @@
 create database if not exists songs;
 
+CREATE USER if not exists 'televiones'@'localhost' IDENTIFIED BY 'televiones';
+GRANT ALL PRIVILEGES ON * . * TO 'televiones'@'localhost';
+FLUSH PRIVILEGES;
+
 use songs;
 
 CREATE TABLE artist(

@@ -1,24 +1,31 @@
 version: "3.7"
 services:
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: "exit 0"
   flask:
     build: ./flask
     container_name: flask
-    restart: always
     environment:
-      - APP_NAME=TeleApp
+      - APP_NAME=MyFlaskApp
     expose:
       - 8080
+    restart: always
+    links:
+        - db
   nginx:
     build: ./nginx
     container_name: nginx
     restart: always
     ports:
       - "8003:80"
-  db:
-    image: mysql:5.7
-    ports:
-      - "32000:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - ./db:/docker-entrypoint-initdb.d/:ro
+
+#    volumes:
+#      - ./db:/docker-entrypoint-initdb.d/:ro
